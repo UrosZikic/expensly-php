@@ -1,0 +1,120 @@
+.error_bubble {
+  background-color: var(--error-bubble-color);
+  width: 100%;
+  max-width: 24rem;
+  padding: 2rem;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+  transition: all 0.5s ease-out;
+  box-shadow: 1px 5px 5px rgba(255, 227, 227, 1);
+  float: right;
+}
+.error_bubble p {
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--blank-color);
+}
+.error_bubble p:first-child {
+  margin-bottom: 1rem;
+}
+.remove_bubble {
+  transform: translateX(240px);
+}
+
+/* border-bubble */
+.border_bubble {
+  background-color: var(--error-bubble-color);
+  width: 100%;
+  max-width: 30rem;
+  padding: 2rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  margin: 5rem 0;
+  transition: all 1s ease;
+}
+.edit_bubble {
+  background-color: var(--edit-bubble-color);
+}
+.border_bubble p {
+  color: var(--blank-color);
+}
+.edit_bubble a {
+  background-color: var(--edit-color);
+}
+
+.success_bubble {
+  background-color: var(--success-bubble-color);
+}
+.success_color {
+  background-color: var(--success-color);
+}
+
+.load_bubble {
+  transform: translateX(-30rem);
+  /* transition: all 1.5; */
+}
+
+.load_in {
+  transform: translateX(0);
+}
+
+.profile_image {
+  width: 100%;
+  max-width: 7.5rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: white;
+  overflow: hidden;
+  border: 1px solid black;
+}
+.profile_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.remove_upload_modal {
+  display: none;
+}
+.upload_modal {
+  position: fixed;
+  top: 30%;
+  left: 20%;
+
+  width: 100%;
+  padding: 5rem;
+  max-width: 30rem;
+  border: 2px solid gray;
+}
+.upload_modal form input {
+  display: none;
+}
+.upload_modal form label {
+  height: 100px;
+  width: 150px;
+  border-radius: 5px;
+  border: 1px dashed gray;
+}
+.image_upload_icon {
+  font-size: 10rem !important;
+}
+.upload_modal form button[type="submit"] {
+  width: 100%;
+  max-width: 15rem;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+.quit_modal {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 2.5rem;
+}
+
+/* expensly adition*/
+.expensly_modal {
+  left: 0;
+  top: 0;
+}
