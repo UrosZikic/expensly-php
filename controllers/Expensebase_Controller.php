@@ -17,18 +17,9 @@ class Expensebase_controller extends Expensebase
   private string $description;
   private string $expense_items;
   private string $expense_costs;
-  private int $expense;
+  private int $expense_total = 0;
   private int $user_id;
-
-  private function validate_expense(int $value)
-  {
-    if (preg_match('/\d/', $value)) {
-      $this->expense = $value;
-    } else {
-      Header('Location: /create-expense');
-      exit();
-    }
-  }
+  private string $image_path;
 
   private function validate_text(string $value, $key)
   {
@@ -56,41 +47,71 @@ class Expensebase_controller extends Expensebase
       $this->expense_costs = implode(',', $expense_costs);
     } else {
       Header('Location: /create-expense');
+      exit();
     }
 
     return [$this->expense_items, $this->expense_costs];
   }
 
+  public function upload_expense_image(int $id)
+  {
+
+    if (isset($_FILES['file']['name'])) {
+      $year = date("Y");
+      $month = date("m");
+      $date = date("d");
+      $upload_dir = "images/users/$id/expenses/$year/$month/$date/";
+
+      if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0777, true);
+      }
+
+      $this->image_path = $target_file = $upload_dir . $_FILES['file']['name'];
+
+      move_uploaded_file($_FILES['file']['tmp_name'], $target_file);
+      // Header("Location: /profile");
+      // exit();
+
+    } else {
+      // echo 'image upload failed';
+      Header('Location: /create-expense');
+      exit();
+    }
+  }
+  private function validate_expense_total()
+  {
+    $expense_total = explode(",", $this->expense_costs);
+    foreach ($expense_total as $expense) {
+      $this->expense_total += $expense;
+    }
+
+    return $this->expense_total;
+  }
 
   public function validate_expense_create()
   {
-
+    // id, title, description, expense_items, expense_costs, expense(expense_total), user_id, image_path
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION["user"])) {
       $this->validate_expense_list($_POST["items"], $_POST["costs"]);
       $this->validate_text($_POST["title"], 'title');
       $this->validate_text($_POST["description"], 'description');
-      $this->validate_expense($_POST['expense']);
+      $this->upload_expense_image($_SESSION["user"]["id"]);
+      $this->validate_expense_total();
       $this->user_id = $_SESSION["user"]["id"];
+      $this->expense_create($this->title, $this->description, $this->expense_items, $this->expense_costs, $this->expense_total, $this->user_id, $this->image_path);
+
+      Header("Location: /profile");
+      exit();
     } else {
       Header("Location: /profile");
       exit();
     }
-    // if (isset($_POST["title"])) {
-    //   echo $_POST['title'];
-    // }
-    // if (isset($_POST["description"])) {
-    //   echo $_POST['description'];
-    // }
-    // if (isset($_POST["expense"])) {
-    //   echo $_POST['expense'];
-    // }
-    // echo "<br>";
-    // echo date("Y-m-d");
-    // echo "<br>";
+  }
 
-    // echo date("H:i:s");
-
-
+  public function validate_expense_view()
+  {
+    $expenses = $this->expense_view($_SESSION["user"]["id"]);
+    return require_once "expensly/expensly_view_expense.php";
   }
 }
 
@@ -100,6 +121,9 @@ $expensebase_controller = new Expensebase_controller();
 switch ($request) {
   case '/register-expense':
     $expensebase_controller->validate_expense_create();
+    break;
+  case '/view-expense':
+    $expensebase_controller->validate_expense_view();
     break;
   default:
     require_once "../index.php";

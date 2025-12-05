@@ -7,5 +7,7 @@ if ($request === '/profile') {
   require_once "components/body_profile.php";
 } else if ($request === '/profile-settings')
   require_once "components/profile_settings.php";
+else if ($request === '/admin-manager')
+  require_once "components/profile_settings.php";
 else
   require_once "components/expense_settings.php";

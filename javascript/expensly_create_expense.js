@@ -53,7 +53,7 @@ let uploaded = false;
 const upload_input = document.querySelector("#file");
 const upload_modal = document.querySelector(".upload_modal");
 upload_input.addEventListener("change", () => {
-  uploaded = !uploaded;
+  uploaded = true;
   upload_modal.classList.add("success_trigger");
   upload_modal.classList.remove("failure_trigger");
 });

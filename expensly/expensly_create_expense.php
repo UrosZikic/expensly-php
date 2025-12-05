@@ -54,10 +54,7 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
           </div>
         </div>
       </div>
-      <div>
-        <label for="expense">Total Expense</label>
-        <input type="number" name="expense" id="expense" required>
-      </div>
+
       <!-- image -->
       <div class="upload_modal flex_default flex_align_center" id="upload_image_container">
         <input type="file" name="file" id="file" hidden required>
