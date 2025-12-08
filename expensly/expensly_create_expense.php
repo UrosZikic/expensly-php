@@ -6,15 +6,21 @@ if (!isset($_COOKIE['auth']))
 // validate logged session and user session
 if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
   Header("Location: /sign-in");
-?>
 
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<main class="flex_default flex_column">
-  <div class="flex_default flex_justify_start flex_align_center">
-    <h1 style="font-weight: 300; margin: 0 0 20px 10px">Dashboard:
+$request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$action = '/register-expense';
+if ($request === "/edit-expense")
+  $action = '/modify-expense'
+
+    ?>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <main class="flex_default flex_column">
+    <div class="flex_default flex_justify_start flex_align_center">
+      <h1 style="font-weight: 300; margin: 0 0 20px 10px">Dashboard:
       <?php echo $user['name'];
-      ?>
+?>
     </h1>
     <div class="profile_image">
       <?php
@@ -31,7 +37,7 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
   </div>
   <!-- x -->
   <div class="flex_default flex_justify_start flex_align_center">
-    <form action="/register-expense" method="post" enctype="multipart/form-data"
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data"
       class="form_layout flex_default flex_column expensly_form">
       <div>
         <label for="title">Title</label>

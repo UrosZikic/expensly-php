@@ -33,10 +33,16 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
   <div>
     <?php
     $total_expense = 0;
+    $pages_to_list = ceil((count($expenses)) / 5);
+
     $paginate = 1;
     if (isset($_GET["p"]))
       $paginate = $_GET["p"];
     ;
+    // if the user tries to manipulate the query, this will prevent the attempt
+    if ($paginate > $pages_to_list || $paginate <= 0) {
+      $paginate = 1;
+    }
 
     $max_post_to_list = 5 * $paginate;
     $min_post_to_list = $max_post_to_list - 4;
@@ -51,11 +57,15 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
             <p><?php echo $expense["title"] ?></p>
             <p><?php echo substr($expense["description"], 0, 5) ?>...</p>
             <p><?php echo $expense["expense"] ?>Din</p>
+
           </div>
           <div>
             <p><?php echo $expense["updated_at"] ?></p>
+            <a href="/edit-expense">Edit</a>
+
           </div>
         </div>
+
         <?php
         $total_expense += $expense["expense"];
       }
@@ -65,7 +75,6 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
 
     <div class="paginate_container" style="margin: 50px 0 0 10px">
       <?php
-      $pages_to_list = ceil((count($expenses)) / 5);
       for ($i = 1; $i <= $pages_to_list; $i++) {
         ?>
         <a class="submit_color" href="/view-expense?p=<?php echo $i ?>"><?php echo $i ?></a>
