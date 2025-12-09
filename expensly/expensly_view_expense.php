@@ -61,8 +61,7 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
           </div>
           <div>
             <p><?php echo $expense["updated_at"] ?></p>
-            <a href="/edit-expense">Edit</a>
-
+            <a href="/edit-expense?id=<?php echo $expense['id'] ?>">Edit</a>
           </div>
         </div>
 

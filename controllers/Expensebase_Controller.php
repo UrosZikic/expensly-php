@@ -53,7 +53,7 @@ class Expensebase_controller extends Expensebase
     return [$this->expense_items, $this->expense_costs];
   }
 
-  public function upload_expense_image(int $id)
+  private function upload_expense_image(int $id)
   {
 
     if (isset($_FILES['file']['name'])) {
@@ -69,15 +69,35 @@ class Expensebase_controller extends Expensebase
       $this->image_path = $target_file = $upload_dir . $_FILES['file']['name'];
 
       move_uploaded_file($_FILES['file']['tmp_name'], $target_file);
-      // Header("Location: /profile");
-      // exit();
-
     } else {
-      // echo 'image upload failed';
       Header('Location: /create-expense');
       exit();
     }
   }
+
+  private function update_expense_image(int $id, string $path, array $state)
+  {
+    if (!$path) {
+      return $this->image_path = $state['image_path'];
+    }
+    // otherwise
+    unlink($state['image_path']);
+    if (isset($_FILES['file']['name'])) {
+      $year = date("Y");
+      $month = date("m");
+      $date = date("d");
+      $upload_dir = "images/users/$id/expenses/$year/$month/$date/";
+
+      if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0777, true);
+      }
+
+      $this->image_path = $target_file = $upload_dir . $_FILES['file']['name'];
+
+      move_uploaded_file($_FILES['file']['tmp_name'], $target_file);
+    }
+  }
+
   private function validate_expense_total()
   {
     $expense_total = explode(",", $this->expense_costs);
@@ -113,6 +133,29 @@ class Expensebase_controller extends Expensebase
     $expenses = $this->expense_view($_SESSION["user"]["id"]);
     return require_once "expensly/expensly_view_expense.php";
   }
+
+  public function validate_expense_edit()
+  {
+    $expense = $this->expense_single_view($_GET["id"], $_SESSION["user"]["id"]);
+    return require_once "expensly/expensly_create_expense.php";
+  }
+
+  public function validate_expense_modify()
+  {
+    $expense_id = $_GET["id"];
+    $this->validate_expense_list($_POST["items"], $_POST["costs"]);
+    $this->validate_text($_POST["title"], 'title');
+    $this->validate_text($_POST["description"], 'description');
+
+    $current_expense_state = $this->expense_single_view($expense_id, $_SESSION["user"]["id"]);
+    $this->update_expense_image($_SESSION["user"]["id"], $_FILES['file']['name'], $current_expense_state);
+
+    $this->validate_expense_total();
+    $this->user_id = $_SESSION["user"]["id"];
+    $this->expense_single_edit($this->title, $this->description, $this->expense_items, $this->expense_costs, $this->expense_total, $this->user_id, $this->image_path, $expense_id);
+
+    Header("Location: /view-expense");
+  }
 }
 
 
@@ -124,6 +167,12 @@ switch ($request) {
     break;
   case '/view-expense':
     $expensebase_controller->validate_expense_view();
+    break;
+  case '/edit-expense':
+    $expensebase_controller->validate_expense_edit();
+    break;
+  case '/modify-expense':
+    $expensebase_controller->validate_expense_modify();
     break;
   default:
     require_once "../index.php";

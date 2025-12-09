@@ -54,11 +54,12 @@ switch ($request) {
     require_once __DIR__ . "/components/user_details.php";
     break;
   case '/create-expense':
-  case '/edit-expense':
     require_once __DIR__ . "/expensly/expensly_create_expense.php";
     break;
   case '/register-expense':
   case '/view-expense':
+  case '/edit-expense':
+  case '/modify-expense':
     require_once __DIR__ . "/controllers/Expensebase_Controller.php";
     break;
   default:
