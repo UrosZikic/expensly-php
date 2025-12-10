@@ -50,18 +50,25 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
       if ($key + 1 >= $min_post_to_list && $key + 1 <= $max_post_to_list) {
         ?>
         <div class="flex_default flex_justify_start" style="border: 0.5px solid black">
-          <div class="profile_image">
-            <img src="<?php echo $expense["image_path"] ?>" alt="<?php echo $expense["title"] ?>">
-          </div>
-          <div class="flex_default flex_column flex_align_center">
-            <p><?php echo $expense["title"] ?></p>
-            <p><?php echo substr($expense["description"], 0, 5) ?>...</p>
-            <p><?php echo $expense["expense"] ?>Din</p>
+          <a href="/single-expense?id=<?php echo $expense["id"] ?>">
+            <div class=" profile_image">
+              <img src="<?php echo $expense["image_path"] ?>" alt="<?php echo $expense["title"] ?>">
+            </div>
+          </a>
 
+          <div class="flex_default flex_column flex_align_center">
+            <a href="/single-expense">
+              <p><?php echo $expense["title"] ?></p>
+              <p><?php echo substr($expense["description"], 0, 5) ?>...</p>
+              <p><?php echo $expense["expense"] ?>Din</p>
+            </a>
           </div>
           <div>
             <p><?php echo $expense["updated_at"] ?></p>
-            <a href="/edit-expense?id=<?php echo $expense['id'] ?>">Edit</a>
+            <a href="/edit-expense?id=<?php echo $expense['id'] ?>">
+              <ion-icon name="pencil-outline" style="font-size: 3.5rem"></ion-icon>
+
+            </a>
           </div>
         </div>
 

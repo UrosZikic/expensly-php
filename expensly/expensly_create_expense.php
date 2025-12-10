@@ -93,13 +93,13 @@ if ($request === "/edit-expense") {
 
       <!-- image -->
       <div class="upload_modal flex_default flex_align_center" id="upload_image_container">
-        <input type="file" name="file" id="file" value="<?php echo $expense["image_path"] ?>" hidden <?php if (!$expense) { ?>required <?php }
-           ; ?>>
+        <input type="file" name="file" id="file" hidden <?php if (!$expense) { ?>required <?php }
+        ; ?>>
         <label for="file" class="flex_default flex_justify_center flex_align_center"
           style="cursor: pointer; background-color: transparent">
           <ion-icon id="image_upload_icon" name="image-outline" style="font-size: 100px; cursor: pointer;"></ion-icon>
         </label>
-        <img src="<?php echo $expense["image_path"]; ?>" alt="" style="object-fit: contain" width="100%"
+        <img src="<?php echo $expense["image_path"] ?? "" ?>" alt="" style="object-fit: contain" width="100%"
           class="uploaded_image">
 
       </div>

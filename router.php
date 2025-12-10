@@ -60,6 +60,7 @@ switch ($request) {
   case '/view-expense':
   case '/edit-expense':
   case '/modify-expense':
+  case "/single-expense":
     require_once __DIR__ . "/controllers/Expensebase_Controller.php";
     break;
   default:

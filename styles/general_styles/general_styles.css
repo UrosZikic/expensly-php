@@ -51,6 +51,9 @@ body {
 .flex_justify_start {
   justify-content: start;
 }
+.flex-align-center {
+  align-items: center;
+}
 /* navigation */
 nav {
   position: fixed;
@@ -66,6 +69,11 @@ nav {
 }
 .nav_ul_list li:hover {
   border-bottom: 3px solid purple;
+}
+
+/* gap */
+.gap_xl {
+  gap: 5rem;
 }
 
 /* links */

@@ -1,0 +1,27 @@
+.expense_single {
+  width: 100%;
+  max-width: 120rem;
+  margin: 5rem auto;
+}
+.expense_single > div:first-child {
+  width: 100%;
+  max-width: 45rem;
+}
+
+.expense_single h1 {
+  font-weight: 300;
+}
+
+.date_styles {
+  width: 7rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  gap: 0;
+  background-color: var(--submit-color);
+}
+.date_styles p {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: var(--blank-color);
+}

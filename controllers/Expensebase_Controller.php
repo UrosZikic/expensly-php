@@ -134,6 +134,17 @@ class Expensebase_controller extends Expensebase
     return require_once "expensly/expensly_view_expense.php";
   }
 
+  public function validate_single_view()
+  {
+    $expense = $this->expense_single_view($_GET["id"], $_SESSION["user"]["id"]);
+    if (!$expense) {
+      Header("Location: /view-expense");
+      exit();
+    }
+
+    return require_once "expensly/expensly_single_view.php";
+  }
+
   public function validate_expense_edit()
   {
     $expense = $this->expense_single_view($_GET["id"], $_SESSION["user"]["id"]);
@@ -173,6 +184,9 @@ switch ($request) {
     break;
   case '/modify-expense':
     $expensebase_controller->validate_expense_modify();
+    break;
+  case '/single-expense':
+    $expensebase_controller->validate_single_view();
     break;
   default:
     require_once "../index.php";
