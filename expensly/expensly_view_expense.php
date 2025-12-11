@@ -67,7 +67,9 @@ if (!isset($_SESSION['logged']) || !isset($_SESSION['user']))
             <p><?php echo $expense["updated_at"] ?></p>
             <a href="/edit-expense?id=<?php echo $expense['id'] ?>">
               <ion-icon name="pencil-outline" style="font-size: 3.5rem"></ion-icon>
-
+            </a>
+            <a href="/delete-expense">
+              <ion-icon name="trash-outline" style="font-size: 3.5rem"></ion-icon>
             </a>
           </div>
         </div>
